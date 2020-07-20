@@ -2,20 +2,20 @@
 #include<malloc.h>
 #include<stdlib.h>
 
-#define MAX_STRING 1000//×î´ó×Ö·û×Ü´®³¤¶È 
-#define MAX_SEA 50//×î´óÄ£Ê½´®³¤¶È 
+#define MAX_STRING 1000//æœ€å¤§å­—ç¬¦æ€»ä¸²é•¿åº¦ 
+#define MAX_SEA 50//æœ€å¤§æ¨¡å¼ä¸²é•¿åº¦ 
 
-int All_string(char *S);//×Ö·û×Ü´® 
-int String(char *T);//Ä£Ê½´® 
-void Next_string(char *T, int *next,int Long);//Ä£Ê½´®µÄnextÊı×é 
-int Search(char *T, char *S, int *next, int M_long,int N_long);//¶¨Î»º¯Êı 
+int All_string(char *S);//å­—ç¬¦æ€»ä¸² 
+int String(char *T);//æ¨¡å¼ä¸² 
+void Next_string(char *T, int *next,int Long);//æ¨¡å¼ä¸²çš„nextæ•°ç»„ 
+int Search(char *T, char *S, int *next, int M_long,int N_long);//å®šä½å‡½æ•° 
 
 int main()
 {
 	char *S = (char*)malloc(MAX_STRING * sizeof(char));
 	char *T = (char*)malloc(MAX_SEA * sizeof(char));
-	int pos, M_long, N_long, i;//posÎªÄ£Ê½´®Óë×Ö·û×Ü´®ÏàÍ¬²¿·ÖµÄÆğÊ¼µã£¬M_longÎª×Ö·û×Ü´®³¤¶È£¬N_longÎªÄ£Ê½´®³¤¶È 
-	int *next;
+	int pos, M_long, N_long, i;//posä¸ºæ¨¡å¼ä¸²ä¸å­—ç¬¦æ€»ä¸²ç›¸åŒéƒ¨åˆ†çš„èµ·å§‹ç‚¹ï¼ŒM_longä¸ºå­—ç¬¦æ€»ä¸²é•¿åº¦ï¼ŒN_longä¸ºæ¨¡å¼ä¸²é•¿åº¦ 
+	int *next = (int*)malloc(MAX_SEA * sizeof(int));
  
 	
 	printf("Please input string:");
@@ -24,17 +24,17 @@ int main()
 	N_long = String(T);		
 	Next_string(T, next, N_long);
 	
-	printf("Ä£Ê½´®µÄnextÊı×éÎª: ");//ÕâÀïµÄnextÊı×é´òÓ¡£¬ÀíÂÛÉÏ¿ÉÒÔ²»ÓÃĞ´µ«ÊÇ²»ÖªµÀÎªÊ²Ã´³öÏÖÁËÆæ¹ÖBUG 
-	for(i=1;i<=N_long;i++)//Searchº¯ÊıÇ°±ØĞëÒª¼ÓÒ»¸öÑ­»·²ÅÄÜÕı³£ÔËĞĞÏÂÈ¥£¬ÒòÎªÕÒ²»³öÔ­Òò¾Í¼ÓÁË¸ö´òÓ¡
-		printf("%d",*(next+i));//next Êı×éµÄ²¿·Ö 
+	printf("æ¨¡å¼ä¸²çš„nextæ•°ç»„ä¸º: ");//æ­¤å¤„BUGå·²ä¿®æ”¹
+	for(i=1;i<=N_long;i++)
+		printf("%d",*(next+i));
 		
 	pos = Search(T, S, next, M_long, N_long);
 
 
 	if(pos == 0)
-		printf("\nERROR!Æ¥ÅäÊ§°Ü,²»´æÔÚÏàÍ¬²¿·Ö");
+		printf("\nERROR!åŒ¹é…å¤±è´¥,ä¸å­˜åœ¨ç›¸åŒéƒ¨åˆ†");
 	else
-		printf("\nÏàÍ¬µãÔÚ%d´¦¿ªÊ¼",pos);
+		printf("\nç›¸åŒç‚¹åœ¨%då¤„å¼€å§‹",pos);
 	
 }
 
@@ -42,27 +42,27 @@ int All_string(char *S)
 {
 	int i = 0;
 	char ch;
-	while((ch = getchar()) != '\n')//µ±ÊäÈë»Ø³µÊ±½«»º³åÇøÊı¾İ·ÅÈëSÖ¸ÕëÖ¸ÏòµÄÇøÓò 
+	while((ch = getchar()) != '\n')//å½“è¾“å…¥å›è½¦æ—¶å°†ç¼“å†²åŒºæ•°æ®æ”¾å…¥SæŒ‡é’ˆæŒ‡å‘çš„åŒºåŸŸ 
 	{
 		if(i>1000)
 			break;
 		i++;
 		*(S+i) = ch;
 	}
-	return i;//·µ»Ø×Ö·û×Ü´®µÄ³¤¶È 
+	return i;//è¿”å›å­—ç¬¦æ€»ä¸²çš„é•¿åº¦ 
 }
 int String(char *T)
 {
 	int i = 0;
 	char ch;
-	while((ch = getchar()) != '\n')//µ±ÊäÈë»Ø³µÊ±½«»º³åÇøÊı¾İ·ÅÈëTÖ¸ÕëÖ¸ÏòµÄÇøÓò 
+	while((ch = getchar()) != '\n')//å½“è¾“å…¥å›è½¦æ—¶å°†ç¼“å†²åŒºæ•°æ®æ”¾å…¥TæŒ‡é’ˆæŒ‡å‘çš„åŒºåŸŸ 
 	{
 		if(i>1000)
 			break;
 		i++;
 		*(T+i) = ch;
 	}
-	return i;//·µ»ØÄ£Ê½´®µÄ³¤¶È 
+	return i;//è¿”å›æ¨¡å¼ä¸²çš„é•¿åº¦ 
 }
 int Search(char *T, char *S, int *next, int M_long, int N_long)
 {
@@ -71,7 +71,7 @@ int Search(char *T, char *S, int *next, int M_long, int N_long)
 	
 	i = j = pos = 1;
 
-	while(i<=M_long&&j<=N_long)//KMPËã·¨Ö÷Òª²¿·Ö 
+	while(i<=M_long&&j<=N_long)//KMPç®—æ³•ä¸»è¦éƒ¨åˆ† 
 		if(j == 0||S[i] == T[j])
 		{
 			i++;
@@ -95,7 +95,7 @@ void Next_string(char *T,int *next,int N_long)
 	j=0;
 	next[1] = 0;
 	
-	while(i<=N_long)//nextÊı×éÖµµÄÇó·¨ 
+	while(i<=N_long)//nextæ•°ç»„å€¼çš„æ±‚æ³• 
 		if(j==0||T[j]==T[i])
 		{
 			j++;
